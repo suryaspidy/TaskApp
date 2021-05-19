@@ -5,11 +5,12 @@
         <relationship name="currentTasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tasks" inverseName="parentCategory" inverseEntity="Tasks"/>
     </entity>
     <entity name="Tasks" representedClassName=".Tasks" syncable="YES" codeGenerationType="class">
+        <attribute name="isFinish" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="taskName" optional="YES" attributeType="String"/>
         <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Categories" inverseName="currentTasks" inverseEntity="Categories"/>
     </entity>
     <elements>
         <element name="Categories" positionX="-45" positionY="0" width="128" height="73"/>
-        <element name="Tasks" positionX="135.015625" positionY="0.0234375" width="128" height="73"/>
+        <element name="Tasks" positionX="135.015625" positionY="0.0234375" width="128" height="88"/>
     </elements>
 </model>

@@ -7,6 +7,9 @@
 
 import UIKit
 import CoreData
+protocol NewTaskAdded {
+    func isTaskListUpdated(isUpdate: Bool)
+}
 
 class AddNewTaskVc: UIViewController {
     
@@ -16,22 +19,25 @@ class AddNewTaskVc: UIViewController {
     @IBOutlet weak var newTaskNameField: UITextField!
     var categoryType: Categories?
     
+    var delegate: NewTaskAdded?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        newTaskNameField.becomeFirstResponder()
         customView.layer.cornerRadius = customView.frame.height/10
 
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func addTaskDoneBtnPressed(_ sender: UIButton) {
         if newTaskNameField.text?.isEmpty == false{
             let addValueInTask = Tasks(context: context)
             addValueInTask.taskName = newTaskNameField.text
+            addValueInTask.isFinish = false
             addValueInTask.parentCategory = categoryType
             DBHandler.saveItems()
+            delegate?.isTaskListUpdated(isUpdate: true)
             newTaskNameField.text = ""
-            
             presentingViewController?.dismiss(animated: true, completion: nil)
             
             

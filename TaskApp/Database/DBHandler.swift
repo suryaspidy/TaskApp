@@ -21,9 +21,27 @@ struct DBHandler {
     
     static func loadTaskItems(specificCategory: String) -> [Tasks]{
         let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
-        let predicateQurry = NSPredicate(format:"parentCategory.categoryName MATCHES %@", specificCategory as CVarArg)
+        let predicateQurry = NSPredicate(format:"isFinish == false && parentCategory.categoryName MATCHES %@", specificCategory as CVarArg)
+        //let predicateQurry2 = NSPredicate(format: "isFinish == %d", false)
 
         request.predicate = predicateQurry
+        //request.predicate = predicateQurry2
+        do{
+            let arrOfTasks = try Constants.context.fetch(request)
+            return(arrOfTasks)
+        }catch{
+            print("Error in loadItem func \(error)")
+            return []
+        }
+    }
+    
+    static func finishedTaskItems(specificCategory: String) -> [Tasks]{
+        let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+        let predicateQurry = NSPredicate(format:"isFinish == true && parentCategory.categoryName MATCHES %@", specificCategory as CVarArg)
+//        let predicateQurry2 = NSPredicate(format: "isFinish == %d", true)
+
+        request.predicate = predicateQurry
+//        request.predicate = predicateQurry2
         do{
             let arrOfTasks = try Constants.context.fetch(request)
             return(arrOfTasks)
@@ -43,5 +61,31 @@ struct DBHandler {
             print("Error in loadItem func \(error)")
             return []
         }
+    }
+    
+    
+    static func deleteCategoryItem(indexPathVal: Int, arr: [Categories]){
+        Constants.context.delete(arr[indexPathVal])
+        self.saveItems()
+    }
+    
+    static func updateCategoryItem(categoryName: String,indexPathVal: Int, arr: [Categories]){
+        arr[indexPathVal].categoryName = categoryName
+        self.saveItems()
+    }
+    
+    static func deleteTaskItems(indexPathVal: Int, arr: [Tasks]){
+        Constants.context.delete(arr[indexPathVal])
+        self.saveItems()
+    }
+    
+    static func updateTaskItems(taskName: String,indexPathVal: Int, arr: [Tasks]){
+        arr[indexPathVal].taskName = taskName
+        self.saveItems()
+    }
+    
+    static func finishTask(indexPathVal: Int, arr: [Tasks]){
+        arr[indexPathVal].isFinish = true
+        self.saveItems()
     }
 }

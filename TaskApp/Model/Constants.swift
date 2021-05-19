@@ -11,8 +11,11 @@ struct Constants{
     static let groupCellNibName = "GroupViewCell"
     static let groupCellIdendifier = "GroupCellID"
     static let addCategorySequeID = "addCategory"
+    static let addCategoryStoryBoardId = "addCategory"
     
     static let goToTaskPage = "categoryItemTapped"
+    static let goToFinishedTasksPage = "finishedTasks"
+    static let taskSelected = "tableViewTapped"
     
     static let taskCellNibName = "TaskViewCell"
     static let taskCellIdentifier = "TaskCellID"
