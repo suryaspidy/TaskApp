@@ -7,18 +7,19 @@
 
 import UIKit
 import CoreData
-protocol NewCategoryAdded {
-    func isCategoryListUpdated(isUpdate: Bool)
-}
+
 
 class AddNewCategoryVc: UIViewController {
+    
     let context = Constants.context
-    var delegate: NewCategoryAdded?
+//    var delegate: NewCategoryAdded?   //For using delegate
     var storedCategoryData = [Categories]()
+    var isNewCatergoryUpdated: ((_ isUpdate: Bool) -> Void)?
 
     @IBOutlet weak var customView: UIView!
     @IBOutlet weak var newCategoryNameField: UITextField!
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         newCategoryNameField.becomeFirstResponder()
@@ -31,7 +32,12 @@ class AddNewCategoryVc: UIViewController {
             let addValueInCategory = Categories(context: context)
             addValueInCategory.categoryName = newCategoryNameField.text
             DBHandler.saveItems()
-            delegate?.isCategoryListUpdated(isUpdate: true)
+            
+            
+//            delegate?.isCategoryListUpdated(isUpdate: true)  //For using delegate
+            
+            
+            isNewCatergoryUpdated?(true)
             newCategoryNameField.text = ""
             presentingViewController?.dismiss(animated: true, completion: nil)
             

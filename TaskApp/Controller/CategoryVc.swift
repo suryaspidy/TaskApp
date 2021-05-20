@@ -39,11 +39,26 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         if segue.identifier == Constants.goToTaskPage{
             let destinationVc = segue.destination as! TaskVc
             destinationVc.categoryType = categoryData[noOfSelectedPosition]
-            destinationVc.delegate = self
+            
+//            destinationVc.delegate = self  //For using delegate
+            
+            
+            destinationVc.ifTaskAddOrDelete = {[self] input in
+                categoryData = DBHandler.loadCategoryItems()
+                collectionView.reloadData()
+            }
         }
         else if segue.identifier == Constants.addCategorySequeID{
             let destinationVc = segue.destination as! AddNewCategoryVc
-            destinationVc.delegate = self
+            
+            
+//            destinationVc.delegate = self   //For using delegate
+            
+            
+            destinationVc.isNewCatergoryUpdated = { input in
+                self.categoryData = DBHandler.loadCategoryItems()
+                self.collectionView.reloadData()
+            }
         }
     }
     
@@ -177,24 +192,25 @@ extension CategoryVc: UICollectionViewDelegateFlowLayout{
 }
 
 
-extension CategoryVc: NewCategoryAdded{
-    func isCategoryListUpdated(isUpdate: Bool) {
-        if isUpdate{
-            categoryData = DBHandler.loadCategoryItems()
-            collectionView.reloadData()
-        }
-    }
-    
-    
-    
-}
+//For using delegate
 
-extension CategoryVc: CountOfTaskChanged{
-    func isTaskListUpdated(isUpdate: Bool) {
-        if isUpdate{
-            categoryData = DBHandler.loadCategoryItems()
-            collectionView.reloadData()
-        }
-    }
-    
-}
+//extension CategoryVc: NewCategoryAdded{
+//    func isCategoryListUpdated(isUpdate: Bool) {
+//        if isUpdate{
+//            categoryData = DBHandler.loadCategoryItems()
+//            collectionView.reloadData()
+//        }
+//    }
+//
+//
+//}
+
+//extension CategoryVc: CountOfTaskChanged{
+//    func isTaskListUpdated(isUpdate: Bool) {
+//        if isUpdate{
+//            categoryData = DBHandler.loadCategoryItems()
+//            collectionView.reloadData()
+//        }
+//    }
+//
+//}

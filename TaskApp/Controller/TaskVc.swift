@@ -7,16 +7,15 @@
 
 import UIKit
 import CoreData
-protocol CountOfTaskChanged{
-    func isTaskListUpdated(isUpdate: Bool)
-}
+
 
 class TaskVc: UIViewController {
     
     let context = Constants.context
     var itemArray = [Tasks]()
     var categoryType: Categories?
-    var delegate: CountOfTaskChanged?
+//    var delegate: CountOfTaskChanged?   //For using delegate
+    var ifTaskAddOrDelete: ((_ isUpdated: Bool) -> Void)?
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -44,7 +43,13 @@ class TaskVc: UIViewController {
         if segue.identifier == Constants.addTaskSequeID {
             let destionationVc = segue.destination as! AddNewTaskVc
             destionationVc.categoryType = categoryType
-            destionationVc.delegate = self
+//            destionationVc.delegate = self
+            destionationVc.isTaskUpdated = { [self] input in
+                itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
+                ifTaskAddOrDelete?(true)
+                tableView.reloadData()
+                
+            }
         } else if segue.identifier == Constants.taskSelected {
             let destinationVc = segue.destination as! TaskDetailVc
             destinationVc.categoryName = categoryType?.categoryName
@@ -52,7 +57,16 @@ class TaskVc: UIViewController {
             destinationVc.taskName = itemArray[selectedPosition].taskName
             destinationVc.elementPosition = selectedPosition
             destinationVc.taskDatas = itemArray
-            destinationVc.delegate = self
+            
+            
+//            destinationVc.delegate = self   //For using delegate
+            
+            
+            destinationVc.isTaskChangeFinised = { [self] input in
+                itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
+                ifTaskAddOrDelete?(true)
+                tableView.reloadData()
+            }
         } else if segue.identifier ==  Constants.goToFinishedTasksPage {
             let destinationVc = segue.destination as! FinishedTasksVc
             destinationVc.categoryName = categoryType?.categoryName
@@ -114,7 +128,12 @@ class TaskVc: UIViewController {
             let confirmDeleteAction = UIAlertAction(title: "Delete", style: .default) { (action) in
                 DBHandler.deleteTaskItems(indexPathVal: elementPosition, arr: itemArray)
                 itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
-                delegate?.isTaskListUpdated(isUpdate: true)
+                
+                
+//                delegate?.isTaskListUpdated(isUpdate: true)   //For using delegate
+                
+                
+                ifTaskAddOrDelete?(true)
                 tableView.reloadData()
             }
             let confirmDeleteCancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -156,28 +175,21 @@ extension TaskVc: UITableViewDataSource{
 
 extension TaskVc: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let alert = UIAlertController(title: "\(itemArray[indexPath.row].taskName!)", message: "", preferredStyle: .actionSheet)
-//        let action1 = UIAlertAction(title: "Finish task", style: .default, handler: nil)
-//        let action2 = UIAlertAction(title: "Back", style: .cancel, handler: nil)
-//
-//        alert.addAction(action1)
-//        alert.addAction(action2)
-//
-//        present(alert, animated: true, completion: nil)
-        
         performSegue(withIdentifier: Constants.taskSelected, sender: self)
     }
 }
 
-extension TaskVc: NewTaskAdded{
-    func isTaskListUpdated(isUpdate: Bool) {
-        if isUpdate{
-            itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
-            delegate?.isTaskListUpdated(isUpdate: true)
-            tableView.reloadData()
-            
-        }
-    }
-    
-    
-}
+
+//For using delegate
+
+//extension TaskVc: NewTaskAdded{
+//    func isTaskListUpdated(isUpdate: Bool) {
+//        if isUpdate{
+//            itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
+//            delegate?.isTaskListUpdated(isUpdate: true)
+//            tableView.reloadData()
+//
+//        }
+//    }
+//
+//}

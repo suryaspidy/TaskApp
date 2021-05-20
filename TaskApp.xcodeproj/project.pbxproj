@@ -27,6 +27,7 @@
 		2D5E8F6226533700006ED774 /* AddNewCategoryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E8F6126533700006ED774 /* AddNewCategoryVc.swift */; };
 		2D5E8F6726533713006ED774 /* AddNewTaskVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E8F6626533713006ED774 /* AddNewTaskVc.swift */; };
 		2D5E8F6C2653534B006ED774 /* DBHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5E8F6B2653534B006ED774 /* DBHandler.swift */; };
+		2DC95A8F26560E2A00730E5C /* ProtoCols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC95A8E26560E2A00730E5C /* ProtoCols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		2D5E8F6126533700006ED774 /* AddNewCategoryVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCategoryVc.swift; sourceTree = "<group>"; };
 		2D5E8F6626533713006ED774 /* AddNewTaskVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTaskVc.swift; sourceTree = "<group>"; };
 		2D5E8F6B2653534B006ED774 /* DBHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHandler.swift; sourceTree = "<group>"; };
+		2DC95A8E26560E2A00730E5C /* ProtoCols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoCols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				2D5E8F4026532EE7006ED774 /* Constants.swift */,
+				2DC95A8E26560E2A00730E5C /* ProtoCols.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D27392B26559D950016B0D3 /* TaskDetailVc.swift in Sources */,
+				2DC95A8F26560E2A00730E5C /* ProtoCols.swift in Sources */,
 				2D5E8EF8265325F1006ED774 /* TaskApp.xcdatamodeld in Sources */,
 				2D5E8F3C26532E91006ED774 /* CategoryVc.swift in Sources */,
 				2D5E8F6726533713006ED774 /* AddNewTaskVc.swift in Sources */,

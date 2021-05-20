@@ -16,7 +16,9 @@ class TaskDetailVc: UIViewController {
     var taskName: String?
     var elementPosition: Int?
     var taskDatas = [Tasks]()
-    var delegate: NewTaskAdded?
+//    var delegate: NewTaskAdded?   //For using delegate
+    
+    var isTaskChangeFinised: ((_ isChanged: Bool) ->Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,7 +34,13 @@ class TaskDetailVc: UIViewController {
         let alert = UIAlertController(title: "Add to finish", message: "You finish the task?", preferredStyle: .actionSheet)
         let action1 = UIAlertAction(title: "Done", style: .default) { [self] (action) in
             DBHandler.finishTask(indexPathVal: elementPosition!, arr: taskDatas)
-            delegate?.isTaskListUpdated(isUpdate: true)
+            
+            
+//            delegate?.isTaskListUpdated(isUpdate: true)  //For using delegate
+            
+            
+            
+            isTaskChangeFinised?(true)
             presentingViewController?.dismiss(animated: true, completion: nil)
         }
         let action2 = UIAlertAction(title: "Back", style: .cancel, handler: nil)

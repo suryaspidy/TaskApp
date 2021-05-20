@@ -7,9 +7,7 @@
 
 import UIKit
 import CoreData
-protocol NewTaskAdded {
-    func isTaskListUpdated(isUpdate: Bool)
-}
+
 
 class AddNewTaskVc: UIViewController {
     
@@ -18,8 +16,9 @@ class AddNewTaskVc: UIViewController {
 
     @IBOutlet weak var newTaskNameField: UITextField!
     var categoryType: Categories?
+//    var delegate: NewTaskAdded?   //For using delegate
     
-    var delegate: NewTaskAdded?
+    var isTaskUpdated: ((_ isUpdated: Bool) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +35,14 @@ class AddNewTaskVc: UIViewController {
             addValueInTask.isFinish = false
             addValueInTask.parentCategory = categoryType
             DBHandler.saveItems()
-            delegate?.isTaskListUpdated(isUpdate: true)
+            
+            
+            
+//            delegate?.isTaskListUpdated(isUpdate: true)   //For using delegate
+            
+            
+            
+            isTaskUpdated?(true)
             newTaskNameField.text = ""
             presentingViewController?.dismiss(animated: true, completion: nil)
             
