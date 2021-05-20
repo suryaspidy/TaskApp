@@ -19,6 +19,7 @@ class FinishedTasksVc: UIViewController {
         tableView.register(UINib(nibName: Constants.taskCellNibName, bundle: nil), forCellReuseIdentifier: Constants.taskCellIdentifier)
         finishedTaskes = DBHandler.finishedTaskItems(specificCategory: categoryName!)
         tableView.dataSource = self
+        
     }
     
 
