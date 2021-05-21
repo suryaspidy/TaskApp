@@ -1,0 +1,33 @@
+
+/* Class = "UIButton"; normalTitle = "Go back"; ObjectID = "3Ey-BJ-cdP"; */
+"3Ey-BJ-cdP.normalTitle" = "Go back";
+
+/* Class = "UILabel"; text = "Enter new Item name"; ObjectID = "4AE-Nc-c0V"; */
+"4AE-Nc-c0V.text" = "Enter new Item name";
+
+/* Class = "UISearchBar"; placeholder = "Search your unfinished task here"; ObjectID = "9dS-cu-m2a"; */
+"9dS-cu-m2a.placeholder" = "Search your unfinished task here";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "G33-xd-17M"; */
+"G33-xd-17M.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "Tvx-D1-ZUh"; */
+"Tvx-D1-ZUh.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "YIM-Nc-fB6"; */
+"YIM-Nc-fB6.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Finish task"; ObjectID = "Zc4-wg-GQH"; */
+"Zc4-wg-GQH.normalTitle" = "Finish task";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "f0o-9c-pnJ"; */
+"f0o-9c-pnJ.title" = "Item";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "jEf-fr-2Da"; */
+"jEf-fr-2Da.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Tasks"; ObjectID = "qu0-EL-FNf"; */
+"qu0-EL-FNf.title" = "Tasks";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "r0V-Wh-AYP"; */
+"r0V-Wh-AYP.title" = "Item";

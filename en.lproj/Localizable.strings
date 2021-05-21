@@ -1,0 +1,58 @@
+/*
+  Localizable.strings
+  TaskApp
+
+  Created by surya-zstk231 on 20/05/21.
+*/
+
+//CategoryVc
+"GROUP_PAGE_TITLE" = "Tasks";
+
+//Add Item Vc
+"ADD_ITEM_DESC" = "Add new item name";
+"ADD_DONE_BTN" = "Done";
+
+"ADD_EMPTY_ITEM_ALERT_TITLE_NAME" = "Alert";
+"ADD_EMPTY_ITEM_ALERT_DESC" = "Please Enter your new item name";
+"ADD_EMPTY_ITEM_GO_BACK_BTN" = "Done";
+
+//TaskVc
+"SEARCH_BOX_PLACEHOLDER_UNFINISHED" = "Search your unfinished tasks here";
+"SEARCH_BOX_PLACEHOLDER_FINISHED" = "Search your finished tasks here";
+
+
+//DetailVc
+"DETAIL_GO_BACK_BTN" = "Go back";
+"ADD_DETAIL_BTN" = "Finish task";
+
+"CONFIRM_FINISH_TASK_ALERT_TITLE" = "Add to finish";
+"CONFIRM_FINISH_TASK_ALERT_MESSAGE" = "You finish the task?";
+"CONFIRM_FINISH_ALERT_FINISH_DONE_BTN" = "Done";
+"CONFIRM_FINISH_ALERT_CANCEL_BTN" = "Back";
+
+
+//Alerts
+"EDIT_ALERT_BTN" = "Edit";
+"DELETE_ALERT_BTN" = "Delete";
+"CANCEL_ALERT_BTN" = "Cancel";
+
+//CategoryEdit Alerts
+"CATEGORY_EDIT_TITLE_NAME" = "Edit";
+"CATEGORY_EDIT_DESC" = "Please change the text";
+
+//Edit action Alerts Failed
+"EMPTY_VAL_DESC" = "Please Enter Correct Values";
+"CANCEL_THE_EMPTY_ALERT" = "Go back";
+
+//CategoryDelete Alerts
+"CATEGORY_DELETE_TITLE_NAME" = "Confirm";
+"CATEGORY_DELETE_DESC" = "Once you delete the category did not get again";
+
+//TaskEdit Alerts
+"TASK_EDIT_TITLE_NAME" = "Edit";
+"TASK_EDIT_DESC" = "Please change the text";
+
+
+//TashDelete Alerts
+"TASK_DELETE_TITLE_NAME" = "Confirm";
+"TASK_DELETE_DESC" = "Once you delete the task you did not get again";

@@ -88,4 +88,36 @@ struct DBHandler {
         arr[indexPathVal].isFinish = true
         self.saveItems()
     }
+    
+    static func filterUnfinishedTask(str: String,categoryName: String) -> [Tasks]{
+        let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+        let condition1 = NSPredicate(format: "isFinish == false &&taskName CONTAINS[cd] %@", str)
+        let condition2 = NSPredicate(format: "parentCategory.categoryName MATCHES %@", categoryName)
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [condition1,condition2])
+        request.predicate = predicate
+        
+        do{
+            let arr = try Constants.context.fetch(request)
+            return arr
+        } catch{
+            print(error)
+        }
+        return []
+    }
+    
+    static func filterFinishedTask(str: String,categoryName: String) -> [Tasks]{
+        let request: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+        let condition1 = NSPredicate(format: "isFinish == true &&taskName CONTAINS[cd] %@", str)
+        let condition2 = NSPredicate(format: "parentCategory.categoryName MATCHES %@", categoryName)
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [condition1,condition2])
+        request.predicate = predicate
+        
+        do{
+            let arr = try Constants.context.fetch(request)
+            return arr
+        } catch{
+            print(error)
+        }
+        return []
+    }
 }

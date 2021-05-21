@@ -12,18 +12,38 @@ class TaskDetailVc: UIViewController {
     @IBOutlet weak var categoryTextArea: UILabel!
     @IBOutlet weak var taskTextArea: UILabel!
     
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var bottomView: UIView!
     var categoryName: String?
     var taskName: String?
     var elementPosition: Int?
     var taskDatas = [Tasks]()
-//    var delegate: NewTaskAdded?   //For using delegate
+    
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var finishBtn: UIButton!
     
     var isTaskChangeFinised: ((_ isChanged: Bool) ->Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addBackGroundViewGesture()
 
         categoryTextArea.text = categoryName
         taskTextArea.text = taskName
+        backBtn.setTitle(NSLocalizedString("DETAIL_GO_BACK_BTN", comment: "Cancel for detail operation"), for: .normal)
+        finishBtn.setTitle(NSLocalizedString("ADD_DETAIL_BTN", comment: "Done for task add to finish"), for: .normal)
+    }
+    
+    func addBackGroundViewGesture(){
+        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
+        
+        bottomView.addGestureRecognizer(tapGesture1)
+        topView.addGestureRecognizer(tapGesture2)
+    }
+    
+    @objc func backgroundTapped(){
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func backBtnPresed(_ sender: UIButton) {
@@ -31,19 +51,13 @@ class TaskDetailVc: UIViewController {
     }
     
     @IBAction func finishTaskBtnPressed(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Add to finish", message: "You finish the task?", preferredStyle: .actionSheet)
-        let action1 = UIAlertAction(title: "Done", style: .default) { [self] (action) in
+        let alert = UIAlertController(title: NSLocalizedString("CONFIRM_FINISH_TASK_ALERT_TITLE", comment: "Finish task alert title"), message: NSLocalizedString("CONFIRM_FINISH_TASK_ALERT_MESSAGE", comment: "Finish task alert message"), preferredStyle: .actionSheet)
+        let action1 = UIAlertAction(title: NSLocalizedString("CONFIRM_FINISH_ALERT_FINISH_DONE_BTN", comment: "Finish done button"), style: .default) { [self] (action) in
             DBHandler.finishTask(indexPathVal: elementPosition!, arr: taskDatas)
-            
-            
-//            delegate?.isTaskListUpdated(isUpdate: true)  //For using delegate
-            
-            
-            
             isTaskChangeFinised?(true)
             presentingViewController?.dismiss(animated: true, completion: nil)
         }
-        let action2 = UIAlertAction(title: "Back", style: .cancel, handler: nil)
+        let action2 = UIAlertAction(title: NSLocalizedString("CONFIRM_FINISH_ALERT_CANCEL_BTN", comment: "Cancel finish alert button"), style: .cancel, handler: nil)
         
         alert.addAction(action1)
         alert.addAction(action2)

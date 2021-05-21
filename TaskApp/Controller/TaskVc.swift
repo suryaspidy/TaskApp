@@ -14,10 +14,13 @@ class TaskVc: UIViewController {
     let context = Constants.context
     var itemArray = [Tasks]()
     var categoryType: Categories?
-//    var delegate: CountOfTaskChanged?   //For using delegate
     var ifTaskAddOrDelete: ((_ isUpdated: Bool) -> Void)?
+    var ifCurrentIsUnFinished: Bool = true
     
+    @IBOutlet weak var finishOrCurrentTaskBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var taskSearchArea: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,25 +28,43 @@ class TaskVc: UIViewController {
 
         itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
         tableView.register(UINib(nibName: Constants.taskCellNibName, bundle: nil), forCellReuseIdentifier: Constants.taskCellIdentifier)
+        taskSearchArea.placeholder = NSLocalizedString("SEARCH_BOX_PLACEHOLDER_UNFINISHED", comment: "UnFinished tasks serach box area")
         tableView.dataSource = self
+        taskSearchArea.delegate = self
         tableView.delegate = self
+        
     }
     
     
     @IBAction func addTaskBtnPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: Constants.addTaskSequeID, sender: self)
+        
     }
     
     @IBAction func finishedTaskBtnPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: Constants.goToFinishedTasksPage, sender: self)
+        if ifCurrentIsUnFinished {
+            finishOrCurrentTaskBtn.image = UIImage(systemName: "chevron.backward")
+            ifCurrentIsUnFinished = false
+            itemArray = DBHandler.finishedTaskItems(specificCategory: (categoryType?.categoryName!)!)
+            taskSearchArea.text = ""
+            taskSearchArea.placeholder = NSLocalizedString("SEARCH_BOX_PLACEHOLDER_FINISHED", comment: "Finished tasks search box area")
+            tableView.reloadData()
+        }else{
+            finishOrCurrentTaskBtn.image = UIImage(systemName: "checkmark")
+            itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
+            taskSearchArea.text = ""
+            taskSearchArea.placeholder = NSLocalizedString("SEARCH_BOX_PLACEHOLDER_UNFINISHED", comment: "UnFinished tasks serach box area")
+            tableView.reloadData()
+            ifCurrentIsUnFinished = true
+        }
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.addTaskSequeID {
-            let destionationVc = segue.destination as! AddNewTaskVc
+            let destionationVc = segue.destination as! AddNewItem
             destionationVc.categoryType = categoryType
-//            destionationVc.delegate = self
+            destionationVc.typeOfAddedElement = AddType.Task
             destionationVc.isTaskUpdated = { [self] input in
                 itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
                 ifTaskAddOrDelete?(true)
@@ -57,20 +78,12 @@ class TaskVc: UIViewController {
             destinationVc.taskName = itemArray[selectedPosition].taskName
             destinationVc.elementPosition = selectedPosition
             destinationVc.taskDatas = itemArray
-            
-            
-//            destinationVc.delegate = self   //For using delegate
-            
-            
             destinationVc.isTaskChangeFinised = { [self] input in
                 itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
                 ifTaskAddOrDelete?(true)
                 tableView.reloadData()
             }
-        } else if segue.identifier ==  Constants.goToFinishedTasksPage {
-            let destinationVc = segue.destination as! FinishedTasksVc
-            destinationVc.categoryName = categoryType?.categoryName
-        }
+        } 
     }
     
     func addGestureForUpdate(viewCell: UITableViewCell,noOfSelectedElement: Int){
@@ -85,18 +98,15 @@ class TaskVc: UIViewController {
         let alert = UIAlertController(title: "\(String(describing: itemArray[elementPosition].taskName!))", message: "", preferredStyle: .actionSheet)
         
         //MARK:- Update Actions
-        let action1 = UIAlertAction(title: "Edit", style: .destructive) {[self] (action) in
+        let action1 = UIAlertAction(title: NSLocalizedString("EDIT_ALERT_BTN", comment: "Edit Button"), style: .destructive) {[self] (action) in
             
             var textFieldAreaForUpdate = UITextField()
             
-            let confirmEditAlert = UIAlertController(title: "Edit", message: "Please Change the text", preferredStyle: .alert)
-            let confirmEditAction = UIAlertAction(title: "Edit", style: .destructive) { (action) in
+            let confirmEditAlert = UIAlertController(title: NSLocalizedString("CATEGORY_EDIT_TITLE_NAME", comment: "Edit alert title"), message: NSLocalizedString("TASK_EDIT_DESC", comment: "Edit describe text"), preferredStyle: .alert)
+            let confirmEditAction = UIAlertAction(title: NSLocalizedString("EDIT_ALERT_BTN", comment: "Edit Btn"), style: .destructive) { (action) in
                 if textFieldAreaForUpdate.text?.isEmpty == true{
-                    let emptyValAlert = UIAlertController(title: "Please Enter Correct Values", message: "", preferredStyle: .alert)
-                    let emptyValAction = UIAlertAction(title: "Go back", style: .default) { (action) in
-                        return
-                    }
-                    
+                    let emptyValAlert = UIAlertController(title: NSLocalizedString("EMPTY_VAL_DESC", comment: "If you give empty string it throws alert title"), message: "", preferredStyle: .alert)
+                    let emptyValAction = UIAlertAction(title: NSLocalizedString("CANCEL_THE_EMPTY_ALERT", comment: "Cancel the alert when empty value occuried"), style: .cancel, handler: nil)
                     emptyValAlert.addAction(emptyValAction)
                     present(emptyValAlert, animated: true, completion: nil)
                 }
@@ -107,7 +117,7 @@ class TaskVc: UIViewController {
                     
                 }
             }
-            let confirmEditCancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+            let confirmEditCancelAction = UIAlertAction(title: NSLocalizedString("CANCEL_ALERT_BTN", comment: "Cancel the edit option"), style: .cancel, handler: nil)
             
             confirmEditAlert.addAction(confirmEditAction)
             confirmEditAlert.addAction(confirmEditCancelAction)
@@ -123,20 +133,15 @@ class TaskVc: UIViewController {
         }
         
         //MARK:- Delete Actions
-        let action2 = UIAlertAction(title: "Delete", style: .destructive) { [self] (code) in
-            let confirmDeleteAlert = UIAlertController(title: "Confirm", message: "Once you delete the category you did not get again", preferredStyle: .alert)
-            let confirmDeleteAction = UIAlertAction(title: "Delete", style: .default) { (action) in
+        let action2 = UIAlertAction(title: NSLocalizedString("DELETE_ALERT_BTN", comment: "Delete button"), style: .destructive) { [self] (code) in
+            let confirmDeleteAlert = UIAlertController(title: NSLocalizedString("TASK_DELETE_TITLE_NAME", comment: "Delete alert"), message: NSLocalizedString("TASK_DELETE_DESC", comment: "Delete desc message"), preferredStyle: .alert)
+            let confirmDeleteAction = UIAlertAction(title: NSLocalizedString("DELETE_ALERT_BTN", comment: "Delete button"), style: .destructive) { (action) in
                 DBHandler.deleteTaskItems(indexPathVal: elementPosition, arr: itemArray)
                 itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
-                
-                
-//                delegate?.isTaskListUpdated(isUpdate: true)   //For using delegate
-                
-                
                 ifTaskAddOrDelete?(true)
                 tableView.reloadData()
             }
-            let confirmDeleteCancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let confirmDeleteCancelAction = UIAlertAction(title: NSLocalizedString("CANCEL_ALERT_BTN", comment: "Cancel delete action"), style: .cancel, handler: nil)
             
             confirmDeleteAlert.addAction(confirmDeleteAction)
             confirmDeleteAlert.addAction(confirmDeleteCancelAction)
@@ -146,7 +151,7 @@ class TaskVc: UIViewController {
         
         
         
-        let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let action3 = UIAlertAction(title: NSLocalizedString("CANCEL_ALERT_BTN", comment: "Cancel all option"), style: .cancel, handler: nil)
         alert.addAction(action1)
         alert.addAction(action2)
         alert.addAction(action3)
@@ -179,17 +184,27 @@ extension TaskVc: UITableViewDelegate{
     }
 }
 
+extension TaskVc: UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let str = searchBar.text! + text
+        if ifCurrentIsUnFinished{
+            itemArray = DBHandler.filterUnfinishedTask(str: str, categoryName: (categoryType?.categoryName)!)
+        }else{
+            itemArray = DBHandler.filterFinishedTask(str: str, categoryName: (categoryType?.categoryName)!)
+        }
+        tableView.reloadData()
+        return true
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        if ifCurrentIsUnFinished{
+            itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
+        }
+        else{
+            itemArray = DBHandler.finishedTaskItems(specificCategory: (categoryType?.categoryName)!)
+        }
+        tableView.reloadData()
+    }
+     
+}
 
-//For using delegate
-
-//extension TaskVc: NewTaskAdded{
-//    func isTaskListUpdated(isUpdate: Bool) {
-//        if isUpdate{
-//            itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
-//            delegate?.isTaskListUpdated(isUpdate: true)
-//            tableView.reloadData()
-//
-//        }
-//    }
-//
-//}

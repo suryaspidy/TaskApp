@@ -7,7 +7,7 @@
     <entity name="Tasks" representedClassName=".Tasks" syncable="YES" codeGenerationType="class">
         <attribute name="isFinish" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="taskName" optional="YES" attributeType="String"/>
-        <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Categories" inverseName="currentTasks" inverseEntity="Categories"/>
+        <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Categories" inverseName="currentTasks" inverseEntity="Categories"/>
     </entity>
     <elements>
         <element name="Categories" positionX="-45" positionY="0" width="128" height="73"/>
