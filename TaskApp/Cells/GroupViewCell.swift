@@ -12,11 +12,13 @@ class GroupViewCell: UICollectionViewCell {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var categoryNameArea: UILabel!
     @IBOutlet weak var taskCount: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         mainView.layer.cornerRadius = 20
     }
+    
 
     
 }

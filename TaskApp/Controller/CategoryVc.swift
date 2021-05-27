@@ -14,11 +14,18 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
     var categoryData = [Categories]()
     var noOfSelectedPosition = 0
     var intForAddDummyCell = 0
+    let label = UILabel()
+    var activeTheme = UserDefaults.standard.string(forKey: "currentTheme")
+    var theme:Theme? = nil
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        colourHandler()
         title = NSLocalizedString("GROUP_PAGE_TITLE", comment: "Category page title")
         print(Constants.dataFilePath)
         categoryData = DBHandler.loadCategoryItems()
@@ -26,8 +33,28 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         
         collectionView.dataSource = self
         collectionView.delegate = self
+  
+    }
+    
+    func colourHandler(){
         
-
+        activeTheme = UserDefaults.standard.string(forKey: "currentTheme")
+        
+        if activeTheme == "White" {
+            theme = Theme.light
+        } else{
+            theme = Theme.dark
+        }
+        
+        collectionView.backgroundColor = theme?.backgroundColour
+        view.backgroundColor = theme?.backgroundColour
+    }
+    
+    func dummyLabelAdd(){
+        label.frame = CGRect(x: (view.frame.width/2)-100, y: (view.frame.height/2)-20, width: 200, height: 40)
+        label.text = "Your category is empty"
+        label.textAlignment = .center
+        view.addSubview(label)
     }
     
     
@@ -42,6 +69,7 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         if segue.identifier == Constants.goToTaskPage{
             let destinationVc = segue.destination as! TaskVc
             destinationVc.categoryType = categoryData[noOfSelectedPosition]
+            destinationVc.theme = theme
             destinationVc.ifTaskAddOrDelete = {[self] input in
                 categoryData = DBHandler.loadCategoryItems()
                 collectionView.reloadData()
@@ -50,7 +78,8 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         else if segue.identifier == Constants.addCategorySequeID{
             let destinationVc = segue.destination as! AddNewItem
             destinationVc.typeOfAddedElement = AddType.Category
-            destinationVc.isNewCatergoryUpdated = { input in
+            destinationVc.theme = theme
+            destinationVc.isNewCatergoryUpdated = { [self] input in
                 self.categoryData = DBHandler.loadCategoryItems()
                 self.collectionView.reloadData()
             }
@@ -136,6 +165,16 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         alert.addAction(action3)
 
         present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func themeBtnPressed(_ sender: UIBarButtonItem) {
+        if UserDefaults.standard.string(forKey: "currentTheme") == "White"{
+            UserDefaults.standard.set("Black", forKey: "currentTheme")
+        }else {
+            UserDefaults.standard.set("White", forKey: "currentTheme")
+        }
+        
+        colourHandler()
     }
     
     

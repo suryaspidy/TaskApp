@@ -26,3 +26,12 @@ struct Constants{
     static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     static let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
 }
+
+
+struct Theme {
+    let textColour: UIColor
+    let backgroundColour: UIColor
+    
+    static let light = Theme(textColour: .black, backgroundColour: .white)
+    static let dark = Theme(textColour: .white, backgroundColour: .black)
+}

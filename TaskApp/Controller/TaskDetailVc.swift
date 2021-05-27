@@ -18,20 +18,44 @@ class TaskDetailVc: UIViewController {
     var taskName: String?
     var elementPosition: Int?
     var taskDatas = [Tasks]()
+    var theme:Theme? = nil
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var finishBtn: UIButton!
+    @IBOutlet weak var mainView: UIView!
     
     var isTaskChangeFinised: ((_ isChanged: Bool) ->Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addBackGroundViewGesture()
+        taskDetailColourHandler()
 
         categoryTextArea.text = categoryName
         taskTextArea.text = taskName
         backBtn.setTitle(NSLocalizedString("DETAIL_GO_BACK_BTN", comment: "Cancel for detail operation"), for: .normal)
         finishBtn.setTitle(NSLocalizedString("ADD_DETAIL_BTN", comment: "Done for task add to finish"), for: .normal)
+    }
+    
+    func taskDetailColourHandler(){
+        backBtn.backgroundColor = theme?.textColour
+        backBtn.setTitleColor(theme?.backgroundColour, for: .normal)
+        backBtn.layer.cornerRadius = backBtn.frame.height/2
+        
+        finishBtn.backgroundColor = theme?.textColour
+        finishBtn.setTitleColor(theme?.backgroundColour, for: .normal)
+        finishBtn.layer.cornerRadius = finishBtn.frame.height/2
+        
+        mainView.backgroundColor = theme?.backgroundColour
+        mainView.layer.borderWidth = 2
+        mainView.layer.borderColor = theme?.textColour.cgColor
+        mainView.layer.cornerRadius = mainView.frame.height/8
+        
+        categoryTextArea.textColor = theme?.textColour
+        categoryTextArea.backgroundColor = theme?.backgroundColour
+        
+        taskTextArea.textColor = theme?.textColour
+        taskTextArea.backgroundColor = theme?.backgroundColour
     }
     
     func addBackGroundViewGesture(){

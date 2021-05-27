@@ -24,18 +24,43 @@ class AddNewItem: UIViewController {
     var isNewCatergoryUpdated: ((_ isUpdate: Bool) -> Void)?
     var typeOfAddedElement: AddType?
     var categoryType: Categories?
+    var theme:Theme? = nil
 
     @IBOutlet weak var customView: UIView!
     @IBOutlet weak var newCategoryNameField: UITextField!
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        finishBtn.layer.cornerRadius = finishBtn.frame.height/2
 
+        addItemPageColourHandler()
         descLabel.text = NSLocalizedString("ADD_ITEM_DESC", comment: "It's add new item describe text")
         finishBtn.setTitle(NSLocalizedString("ADD_DONE_BTN", comment: "It's add new item done botton"), for: .normal)
         addBackGroundViewGesture()
         newCategoryNameField.becomeFirstResponder()
         
+    }
+    
+    func addItemPageColourHandler(){
+        descLabel.backgroundColor = theme?.backgroundColour
+        descLabel.textColor = theme?.textColour
+        
+        customView.backgroundColor = theme?.backgroundColour
+        customView.layer.borderColor = theme?.textColour.cgColor
+        customView.layer.borderWidth = 2
+        customView.layer.cornerRadius = customView.frame.height/8
+        
+        newCategoryNameField.backgroundColor = theme?.backgroundColour
+        newCategoryNameField.textColor = theme?.textColour
+        newCategoryNameField.layer.shadowColor = theme?.textColour.cgColor
+        newCategoryNameField.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        newCategoryNameField.layer.shadowOpacity = 1.0
+        newCategoryNameField.layer.shadowRadius = 5.0
+        newCategoryNameField.layer.masksToBounds = false
+        
+        finishBtn.backgroundColor = theme?.textColour
+        finishBtn.setTitleColor(theme?.backgroundColour, for: .normal)
     }
     
     func addBackGroundViewGesture(){

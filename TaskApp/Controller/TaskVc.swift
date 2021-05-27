@@ -16,6 +16,7 @@ class TaskVc: UIViewController {
     var categoryType: Categories?
     var ifTaskAddOrDelete: ((_ isUpdated: Bool) -> Void)?
     var ifCurrentIsUnFinished: Bool = true
+    var theme:Theme? = nil
     
     @IBOutlet weak var finishOrCurrentTaskBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
@@ -24,6 +25,7 @@ class TaskVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        taskPageColourHandler()
         title = categoryType?.categoryName
 
         itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
@@ -33,6 +35,11 @@ class TaskVc: UIViewController {
         taskSearchArea.delegate = self
         tableView.delegate = self
         
+    }
+    
+    func taskPageColourHandler(){
+        tableView.backgroundColor = theme?.backgroundColour
+        view.backgroundColor = theme?.backgroundColour
     }
     
     
@@ -65,6 +72,7 @@ class TaskVc: UIViewController {
             let destionationVc = segue.destination as! AddNewItem
             destionationVc.categoryType = categoryType
             destionationVc.typeOfAddedElement = AddType.Task
+            destionationVc.theme = theme
             destionationVc.isTaskUpdated = { [self] input in
                 itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
                 ifTaskAddOrDelete?(true)
@@ -77,6 +85,7 @@ class TaskVc: UIViewController {
             let selectedPosition = tableView.indexPathForSelectedRow!.row
             destinationVc.taskName = itemArray[selectedPosition].taskName
             destinationVc.elementPosition = selectedPosition
+            destinationVc.theme = theme
             destinationVc.taskDatas = itemArray
             destinationVc.isTaskChangeFinised = { [self] input in
                 itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
