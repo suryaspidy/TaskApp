@@ -47,17 +47,24 @@ class AddNewItem: UIViewController {
         descLabel.textColor = theme?.textColour
         
         customView.backgroundColor = theme?.backgroundColour
-        customView.layer.borderColor = theme?.textColour.cgColor
+//        customView.layer.borderColor = theme?.textColour.cgColor
         customView.layer.borderWidth = 2
-        customView.layer.cornerRadius = customView.frame.height/8
+        customView.layer.cornerRadius = customView.frame.height/15
+        customView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        customView.layer.shadowColor = theme?.textColour.cgColor
+        customView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        customView.layer.shadowOpacity = 1.0
+        customView.layer.shadowRadius = 5
         
         newCategoryNameField.backgroundColor = theme?.backgroundColour
         newCategoryNameField.textColor = theme?.textColour
         newCategoryNameField.layer.shadowColor = theme?.textColour.cgColor
         newCategoryNameField.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
         newCategoryNameField.layer.shadowOpacity = 1.0
-        newCategoryNameField.layer.shadowRadius = 5.0
+        newCategoryNameField.layer.shadowRadius = 3.0
         newCategoryNameField.layer.masksToBounds = false
+        
+        
         
         finishBtn.backgroundColor = theme?.textColour
         finishBtn.setTitleColor(theme?.backgroundColour, for: .normal)

@@ -51,9 +51,8 @@ class TaskVc: UIViewController {
         taskSearchArea.searchTextField.backgroundColor = theme?.textColour
         taskSearchArea.searchTextField.textColor = theme?.backgroundColour
         
-        taskNavGoBackBtn.tintColor = theme?.textColour
-        finishOrCurrentTaskBtn.tintColor = theme?.textColour
-        newTaskAddNavBtn.tintColor = theme?.textColour
+        
+        self.navigationController?.navigationBar.tintColor = theme?.textColour
 
 
     }
@@ -183,10 +182,7 @@ class TaskVc: UIViewController {
 
         present(alert, animated: true, completion: nil)
     }
-    @IBAction func goToCategoryPage(_ sender: UIBarButtonItem) {
-        
-        performSegue(withIdentifier: "goToCategoryFromTask", sender: self)
-    }
+   
     
 }
 
