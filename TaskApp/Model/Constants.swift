@@ -32,7 +32,11 @@ struct Theme {
     let textColour: UIColor
     let backgroundColour: UIColor
     let shadowColour: UIColor
+    let mainColour: UIColor
+    let doneBtnColour: UIColor
+    let doneBtnTextColour: UIColor
     
-    static let light = Theme(textColour: .black, backgroundColour: .white, shadowColour: .systemGray3)
-    static let dark = Theme(textColour: .white, backgroundColour: .black, shadowColour: .systemGray6)
+    static let light = Theme(textColour: .black, backgroundColour: .white, shadowColour: .systemGray6, mainColour: .white, doneBtnColour: .red, doneBtnTextColour: .white)
+    static let dark = Theme(textColour: .white, backgroundColour: .black, shadowColour: .systemGray, mainColour: .systemGray, doneBtnColour: .systemBlue, doneBtnTextColour: .white)
 }
+

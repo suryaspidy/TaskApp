@@ -21,7 +21,6 @@ class GroupViewCell: UICollectionViewCell {
     }
     
     func collectionViewCellColourHander(theme: Theme){
-        parentView.layer.borderWidth = 1
         parentView.backgroundColor = theme.shadowColour
         
         mainView.backgroundColor = theme.backgroundColour
@@ -34,14 +33,13 @@ class GroupViewCell: UICollectionViewCell {
     }
     
     func forDummyCell(theme: Theme){
-        parentView.backgroundColor = theme.backgroundColour
-        mainView.backgroundColor = theme.backgroundColour
-        parentView.layer.borderColor = theme.backgroundColour.cgColor
-        taskCount.textColor = theme.backgroundColour
-        categoryNameArea.textColor = theme.backgroundColour
+        parentView.backgroundColor = theme.shadowColour
+        mainView.backgroundColor = theme.shadowColour
+        taskCount.textColor = theme.shadowColour
+        categoryNameArea.textColor = theme.shadowColour
         
-        taskCount.backgroundColor = theme.backgroundColour
-        categoryNameArea.backgroundColor = theme.backgroundColour
+        taskCount.backgroundColor = theme.shadowColour
+        categoryNameArea.backgroundColor = theme.shadowColour
     }
 
     

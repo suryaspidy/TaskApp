@@ -16,6 +16,7 @@ class TaskVc: UIViewController {
     var categoryType: Categories?
     var ifTaskAddOrDelete: ((_ isUpdated: Bool) -> Void)?
     var ifCurrentIsUnFinished: Bool = true
+    let label = UILabel()
     var theme:Theme? = nil
     
     
@@ -25,7 +26,10 @@ class TaskVc: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBar: UINavigationItem!
     
+    
     @IBOutlet weak var taskSearchArea: UISearchBar!
+    @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var searchView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,18 +47,20 @@ class TaskVc: UIViewController {
     }
     
     func taskPageColourHandler(){
-        tableView.backgroundColor = theme?.backgroundColour
+        tableView.backgroundColor = theme?.shadowColour
         view.backgroundColor = theme?.backgroundColour
         
         taskSearchArea.barTintColor = theme?.backgroundColour
-        taskSearchArea.tintColor = theme?.backgroundColour
-        taskSearchArea.searchTextField.backgroundColor = theme?.textColour
-        taskSearchArea.searchTextField.textColor = theme?.backgroundColour
-        
+        taskSearchArea.tintColor = theme?.textColour
+        taskSearchArea.searchTextField.backgroundColor = theme?.shadowColour
+        taskSearchArea.searchTextField.textColor = theme?.textColour
         
         self.navigationController?.navigationBar.tintColor = theme?.textColour
 
 
+        searchView.backgroundColor = theme?.backgroundColour
+        cancelBtn.backgroundColor = theme?.backgroundColour
+        cancelBtn.setTitleColor(theme?.textColour, for: .normal)
     }
     
     
@@ -183,6 +189,23 @@ class TaskVc: UIViewController {
         present(alert, animated: true, completion: nil)
     }
    
+    func addEmptyLabel(){
+        label.frame = CGRect(x: (self.view.frame.width/2)-75, y: (self.view.frame.height/2)-25, width: 150, height: 50)
+        label.text = "Task is empty"
+        label.textAlignment = .center
+        label.textColor = theme?.textColour
+        view.addSubview(label)
+    }
+    @IBAction func searchCancelBtnPressed(_ sender: UIButton) {
+        taskSearchArea.text = ""
+        if ifCurrentIsUnFinished{
+            itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
+        }
+        else{
+            itemArray = DBHandler.finishedTaskItems(specificCategory: (categoryType?.categoryName)!)
+        }
+        tableView.reloadData()
+    }
     
 }
 
@@ -190,6 +213,11 @@ class TaskVc: UIViewController {
 extension TaskVc: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let noOfRows = itemArray.count
+        if noOfRows == 0{
+            addEmptyLabel()
+        } else{
+            label.removeFromSuperview()
+        }
         return noOfRows
     }
     
@@ -221,16 +249,7 @@ extension TaskVc: UISearchBarDelegate{
         tableView.reloadData()
         return true
     }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        if ifCurrentIsUnFinished{
-            itemArray = DBHandler.loadTaskItems(specificCategory: (categoryType?.categoryName)!)
-        }
-        else{
-            itemArray = DBHandler.finishedTaskItems(specificCategory: (categoryType?.categoryName)!)
-        }
-        tableView.reloadData()
-    }
+
      
 }
 

@@ -49,7 +49,7 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
             theme = Theme.dark
         }
         
-        collectionView.backgroundColor = theme?.backgroundColour
+        collectionView.backgroundColor = theme?.shadowColour
         view.backgroundColor = theme?.backgroundColour
         
         categoryNavNewAddBtn.tintColor = theme?.textColour
@@ -187,6 +187,14 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         collectionView.reloadData()
     }
     
+    func addEmptyLabel(){
+        label.frame = CGRect(x: (self.view.frame.width/2)-125, y: (self.view.frame.height/2)-25, width: 250, height: 50)
+        label.text = "Your category list is empty"
+        label.textAlignment = .center
+        label.textColor = theme?.textColour
+        view.addSubview(label)
+    }
+    
     
 }
 
@@ -194,9 +202,15 @@ extension CategoryVc: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let noOfCategories = categoryData.count
         if noOfCategories == 1{
-            
+            label.removeFromSuperview()
             return 2
+        } else if noOfCategories == 0 {
+            addEmptyLabel()
+        } else{
+            label.removeFromSuperview()
         }
+        
+        
         return noOfCategories
     }
     

@@ -9,9 +9,12 @@ import UIKit
 
 class TaskDetailVc: UIViewController {
 
+    @IBOutlet weak var titleForDetailPage: UILabel!
     @IBOutlet weak var categoryTextArea: UILabel!
     @IBOutlet weak var taskTextArea: UILabel!
     
+    @IBOutlet weak var dummyCategoryLabelArea: UILabel!
+    @IBOutlet weak var dummyTaskLabelArea: UILabel!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var bottomView: UIView!
     var categoryName: String?
@@ -20,7 +23,6 @@ class TaskDetailVc: UIViewController {
     var taskDatas = [Tasks]()
     var theme:Theme? = nil
     
-    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var finishBtn: UIButton!
     @IBOutlet weak var mainView: UIView!
     
@@ -33,29 +35,35 @@ class TaskDetailVc: UIViewController {
 
         categoryTextArea.text = categoryName
         taskTextArea.text = taskName
-        backBtn.setTitle(NSLocalizedString("DETAIL_GO_BACK_BTN", comment: "Cancel for detail operation"), for: .normal)
+//        backBtn.setTitle(NSLocalizedString("DETAIL_GO_BACK_BTN", comment: "Cancel for detail operation"), for: .normal)
         finishBtn.setTitle(NSLocalizedString("ADD_DETAIL_BTN", comment: "Done for task add to finish"), for: .normal)
     }
     
     func taskDetailColourHandler(){
-        backBtn.backgroundColor = theme?.textColour
-        backBtn.setTitleColor(theme?.backgroundColour, for: .normal)
-        backBtn.layer.cornerRadius = backBtn.frame.height/2
-        
-        finishBtn.backgroundColor = theme?.textColour
-        finishBtn.setTitleColor(theme?.backgroundColour, for: .normal)
-        finishBtn.layer.cornerRadius = finishBtn.frame.height/2
+        finishBtn.backgroundColor = theme?.doneBtnColour
+        finishBtn.setTitleColor(theme?.doneBtnTextColour, for: .normal)
+        finishBtn.layer.cornerRadius = finishBtn.frame.height/8
         
         mainView.backgroundColor = theme?.backgroundColour
         mainView.layer.borderWidth = 2
         mainView.layer.borderColor = theme?.textColour.cgColor
-        mainView.layer.cornerRadius = mainView.frame.height/8
+        mainView.layer.cornerRadius = mainView.frame.height/20
         
         categoryTextArea.textColor = theme?.textColour
         categoryTextArea.backgroundColor = theme?.backgroundColour
         
         taskTextArea.textColor = theme?.textColour
         taskTextArea.backgroundColor = theme?.backgroundColour
+        
+        dummyTaskLabelArea.backgroundColor = theme?.backgroundColour
+        dummyTaskLabelArea.textColor = theme?.textColour
+        
+        dummyCategoryLabelArea.backgroundColor = theme?.backgroundColour
+        
+        dummyCategoryLabelArea.textColor = theme?.textColour
+        
+        titleForDetailPage.textColor = theme?.textColour
+        titleForDetailPage.backgroundColor = theme?.backgroundColour
     }
     
     func addBackGroundViewGesture(){
