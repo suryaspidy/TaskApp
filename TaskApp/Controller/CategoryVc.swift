@@ -39,7 +39,7 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
     func colourHandler(){
         
         activeTheme = UserDefaults.standard.string(forKey: "currentTheme")
-        
+        print(activeTheme!)
         if activeTheme == "White" {
             theme = Theme.light
         } else{
@@ -175,6 +175,8 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         }
         
         colourHandler()
+        
+        collectionView.reloadData()
     }
     
     
@@ -199,19 +201,15 @@ extension CategoryVc: UICollectionViewDataSource{
                 let noOfTasks = DBHandler.loadTaskItems(specificCategory: categoryData[0].categoryName!)
                 cell.categoryNameArea.text = name
                 cell.taskCount.text = "\(noOfTasks.count)"
-                print("1")
                 cell.tag = 0
-                cell.mainView.tag = 0
+                cell.collectionViewCellColourHander(theme: theme!)
                 addGestureForUpdate(viewCell: cell, noOfSelectedElement: indexPath.row)
                 intForAddDummyCell = 1
                 return cell
             }else if intForAddDummyCell == 1 {
                 let cellDummy = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.groupCellIdendifier, for: indexPath) as! GroupViewCell
                 cellDummy.isUserInteractionEnabled = false
-                cellDummy.mainView.backgroundColor = .none
-                cellDummy.taskCount.textColor = .systemGray6
-                cellDummy.categoryNameArea.textColor = .systemGray6
-                print("2")
+                cellDummy.forDummyCell(theme: theme!)
                 intForAddDummyCell = 0
                 return cellDummy
             }
@@ -224,12 +222,9 @@ extension CategoryVc: UICollectionViewDataSource{
         let noOfTasks = DBHandler.loadTaskItems(specificCategory: categoryData[indexPath.row].categoryName!)
         cell.categoryNameArea.text = name
         cell.taskCount.text = "\(noOfTasks.count)"
-            cell.mainView.backgroundColor = .white
-        cell.taskCount.textColor = .black
-        cell.categoryNameArea.textColor = .black
+        cell.collectionViewCellColourHander(theme: theme!)
         cell.isUserInteractionEnabled = true
         cell.tag = indexPath.row
-        cell.mainView.tag = indexPath.row
         addGestureForUpdate(viewCell: cell, noOfSelectedElement: indexPath.row)
         return cell
         }

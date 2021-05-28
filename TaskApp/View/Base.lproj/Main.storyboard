@@ -173,10 +173,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search your unfinished task here" showsCancelButton="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dS-cu-m2a">
+                            <searchBar contentMode="redraw" placeholder="Search your unfinished task here" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9dS-cu-m2a">
                                 <rect key="frame" x="0.0" y="88" width="375" height="51"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.3333333432674408" green="0.077979132701328516" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KWR-2U-xAt">
@@ -330,7 +330,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wZZ-T4-O5a"/>
+        <segue reference="GOb-XH-yfN"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="MainIcon" width="1024" height="1024"/>

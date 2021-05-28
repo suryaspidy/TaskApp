@@ -18,6 +18,7 @@ class TaskVc: UIViewController {
     var ifCurrentIsUnFinished: Bool = true
     var theme:Theme? = nil
     
+    
     @IBOutlet weak var finishOrCurrentTaskBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
@@ -40,6 +41,13 @@ class TaskVc: UIViewController {
     func taskPageColourHandler(){
         tableView.backgroundColor = theme?.backgroundColour
         view.backgroundColor = theme?.backgroundColour
+        
+        taskSearchArea.barTintColor = theme?.backgroundColour
+        taskSearchArea.tintColor = theme?.backgroundColour
+        taskSearchArea.searchTextField.backgroundColor = theme?.textColour
+        taskSearchArea.searchTextField.textColor = theme?.backgroundColour
+
+
     }
     
     
@@ -181,6 +189,7 @@ extension TaskVc: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.taskCellIdentifier, for: indexPath) as! TaskViewCell
         cell.taskNameArea.text = "\(String(describing: itemArray[indexPath.row].taskName!))"
         cell.tag = indexPath.row
+        cell.tableViewCellColurHandler(theme: theme!)
         addGestureForUpdate(viewCell: cell, noOfSelectedElement: indexPath.row)
         return cell
     }

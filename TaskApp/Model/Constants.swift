@@ -31,7 +31,8 @@ struct Constants{
 struct Theme {
     let textColour: UIColor
     let backgroundColour: UIColor
+    let shadowColour: UIColor
     
-    static let light = Theme(textColour: .black, backgroundColour: .white)
-    static let dark = Theme(textColour: .white, backgroundColour: .black)
+    static let light = Theme(textColour: .black, backgroundColour: .white, shadowColour: .systemGray3)
+    static let dark = Theme(textColour: .white, backgroundColour: .black, shadowColour: .systemGray6)
 }
