@@ -11,6 +11,8 @@ import CoreData
 class CategoryVc: UIViewController, UICollectionViewDelegate{
     
     
+    @IBOutlet weak var categoryNavNewAddBtn: UIBarButtonItem!
+    @IBOutlet weak var categoryNavThemeBtn: UIBarButtonItem!
     var categoryData = [Categories]()
     var noOfSelectedPosition = 0
     var intForAddDummyCell = 0
@@ -33,6 +35,7 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
   
     }
     
@@ -48,6 +51,11 @@ class CategoryVc: UIViewController, UICollectionViewDelegate{
         
         collectionView.backgroundColor = theme?.backgroundColour
         view.backgroundColor = theme?.backgroundColour
+        
+        categoryNavNewAddBtn.tintColor = theme?.textColour
+        categoryNavThemeBtn.tintColor = theme?.textColour
+        categoryNavThemeBtn.title = activeTheme
+        
     }
     
     func dummyLabelAdd(){

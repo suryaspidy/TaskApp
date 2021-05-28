@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="43N-fE-cko">
-                                <rect key="frame" x="10" y="88" width="355" height="641"/>
+                                <rect key="frame" x="10" y="44" width="355" height="685"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="62g-ML-BJB">
                                     <size key="itemSize" width="128" height="128"/>
@@ -52,6 +52,8 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="categoryNavNewAddBtn" destination="r0V-Wh-AYP" id="DOC-bG-cMd"/>
+                        <outlet property="categoryNavThemeBtn" destination="Abc-bF-HgI" id="hhn-64-bBm"/>
                         <outlet property="collectionView" destination="43N-fE-cko" id="IRS-7e-RMV"/>
                         <segue destination="kiX-MS-EQd" kind="presentation" identifier="addCategory" id="wZZ-T4-O5a"/>
                         <segue destination="nOI-1e-AsD" kind="show" identifier="categoryItemTapped" id="SyV-qJ-QRf"/>
@@ -168,19 +170,19 @@
         <!--Task Vc-->
         <scene sceneID="xoM-6U-Eji">
             <objects>
-                <viewController id="nOI-1e-AsD" customClass="TaskVc" customModule="TaskApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="currentContext" id="nOI-1e-AsD" customClass="TaskVc" customModule="TaskApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pP3-M9-iMb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search your unfinished task here" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9dS-cu-m2a">
-                                <rect key="frame" x="0.0" y="88" width="375" height="51"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="51"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <color key="tintColor" red="0.3333333432674408" green="0.077979132701328516" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KWR-2U-xAt">
-                                <rect key="frame" x="0.0" y="139" width="375" height="590"/>
+                                <rect key="frame" x="0.0" y="95" width="375" height="634"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -198,6 +200,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mJh-RO-kKf">
+                        <barButtonItem key="leftBarButtonItem" systemItem="rewind" id="V0u-9B-mfG">
+                            <connections>
+                                <action selector="goToCategoryPage:" destination="nOI-1e-AsD" id="j39-Aj-oxG"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="plus" catalog="system" id="f0o-9c-pnJ">
                                 <connections>
@@ -214,9 +221,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="finishOrCurrentTaskBtn" destination="G33-xd-17M" id="aos-KO-sOq"/>
+                        <outlet property="navBar" destination="mJh-RO-kKf" id="mby-ju-kl7"/>
+                        <outlet property="newTaskAddNavBtn" destination="f0o-9c-pnJ" id="mUG-Kv-Dai"/>
                         <outlet property="tableView" destination="KWR-2U-xAt" id="IA6-8Q-M58"/>
+                        <outlet property="taskNavGoBackBtn" destination="V0u-9B-mfG" id="MxU-GT-0gz"/>
                         <outlet property="taskSearchArea" destination="9dS-cu-m2a" id="gQh-1e-0Gk"/>
                         <segue destination="5vQ-33-gZu" kind="presentation" identifier="tableViewTapped" id="Lyn-C7-5J7"/>
+                        <segue destination="Dgp-nZ-K8g" kind="show" identifier="goToCategoryFromTask" id="ss0-At-Daf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vPx-qe-urL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -330,10 +341,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GOb-XH-yfN"/>
+        <segue reference="SyV-qJ-QRf"/>
+        <segue reference="wZZ-T4-O5a"/>
+        <segue reference="ss0-At-Daf"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="MainIcon" width="1024" height="1024"/>
+        <image name="MainIcon" width="500" height="500"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="linkColor">

@@ -19,12 +19,16 @@ class TaskVc: UIViewController {
     var theme:Theme? = nil
     
     
+    @IBOutlet weak var taskNavGoBackBtn: UIBarButtonItem!
     @IBOutlet weak var finishOrCurrentTaskBtn: UIBarButtonItem!
+    @IBOutlet weak var newTaskAddNavBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navBar: UINavigationItem!
     
     @IBOutlet weak var taskSearchArea: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         taskPageColourHandler()
         title = categoryType?.categoryName
@@ -46,6 +50,10 @@ class TaskVc: UIViewController {
         taskSearchArea.tintColor = theme?.backgroundColour
         taskSearchArea.searchTextField.backgroundColor = theme?.textColour
         taskSearchArea.searchTextField.textColor = theme?.backgroundColour
+        
+        taskNavGoBackBtn.tintColor = theme?.textColour
+        finishOrCurrentTaskBtn.tintColor = theme?.textColour
+        newTaskAddNavBtn.tintColor = theme?.textColour
 
 
     }
@@ -174,6 +182,10 @@ class TaskVc: UIViewController {
         alert.addAction(action3)
 
         present(alert, animated: true, completion: nil)
+    }
+    @IBAction func goToCategoryPage(_ sender: UIBarButtonItem) {
+        
+        performSegue(withIdentifier: "goToCategoryFromTask", sender: self)
     }
     
 }
